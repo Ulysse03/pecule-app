@@ -1,5 +1,8 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { PeriodProvider } from './context/PeriodContext';
+import Landing from './pages/Landing';
+import Auth from './pages/Auth';
+import Pricing from './pages/Pricing';
 import Dashboard from './pages/Dashboard';
 import Comptes from './pages/Comptes';
 import Flux from './pages/Flux';
@@ -14,7 +17,9 @@ export default function App() {
     <BrowserRouter>
       <PeriodProvider>
         <Routes>
-          <Route path="/" element={<Navigate to="/dashboard" replace />} />
+          <Route path="/" element={<Landing />} />
+          <Route path="/auth" element={<Auth />} />
+          <Route path="/pricing" element={<Pricing />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/comptes" element={<Comptes />} />
           <Route path="/flux" element={<Flux />} />
