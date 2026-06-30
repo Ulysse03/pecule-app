@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *{box-sizing:border-box;}
+    html,body{margin:0;background:#0a1410;}
+    body{font-family:'Schibsted Grotesk',system-ui,sans-serif;-webkit-font-smoothing:antialiased;}
+    .mono{font-family:'JetBrains Mono',monospace;font-feature-settings:'tnum';}
+    .scl{scrollbar-width:none;}
+    .scl::-webkit-scrollbar{display:none;}
+    @keyframes sheetUp{from{transform:translateY(100%);}to{transform:translateY(0);}}
+    @keyframes scrimIn{from{opacity:0;}to{opacity:1;}}
+  </style>
+</helmet>
+<div style="min-height:100vh;display:flex;align-items:center;justify-content:center;padding:40px;background:radial-gradient(120% 120% at 50% 0%,#13241b 0%,#0a1410 60%);">
+<x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" width="402" height="874" hint-size="402px,874px">
+
+  <div style="height:100%;display:flex;flex-direction:column;background:#f4f8f6;position:relative;overflow:hidden;">
+
+    <!-- ===================== HEADER ===================== -->
+    <div style="flex-shrink:0;padding:54px 20px 14px;background:#fff;border-bottom:1px solid #eef3f0;display:flex;align-items:center;justify-content:space-between;">
+      <div style="display:flex;align-items:center;gap:11px;">
+        <div style="width:38px;height:38px;border-radius:11px;background:#07150f;display:flex;align-items:center;justify-content:center;">
+          <div style="width:13px;height:13px;border-radius:4px;background:#3ddc84;"></div>
+        </div>
+        <div>
+          <div style="font-size:11px;color:#93a29a;font-weight:600;letter-spacing:.02em;">{{ greeting }}</div>
+          <div style="font-size:16px;font-weight:800;letter-spacing:-.02em;color:#0e1f16;">Camille Roussel</div>
+        </div>
+      </div>
+      <div style="position:relative;width:40px;height:40px;border-radius:12px;background:#f4f8f6;border:1px solid #e9efeb;display:flex;align-items:center;justify-content:center;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3a4a40" stroke-width="2"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>
+        <div style="position:absolute;top:7px;right:7px;width:7px;height:7px;border-radius:50%;background:#e7625f;border:1.5px solid #fff;"></div>
+      </div>
+    </div>
+
+    <!-- ===================== SCROLL AREA ===================== -->
+    <div class="scl" style="flex:1;overflow-y:auto;padding:16px 16px 24px;">
+
+      <!-- ========== TAB : ACCUEIL ========== -->
+      <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+        <!-- hero patrimoine -->
+        <section style="background:#07150f;border-radius:22px;padding:22px;position:relative;overflow:hidden;">
+          <div style="position:absolute;right:-40px;top:-40px;width:160px;height:160px;border-radius:50%;background:radial-gradient(circle,rgba(61,220,132,.18),transparent 70%);"></div>
+          <div style="display:flex;align-items:center;justify-content:space-between;position:relative;">
+            <div style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#7c9286;font-weight:700;">Patrimoine net</div>
+            <div class="mono" style="font-size:10px;color:#8aa294;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);padding:3px 8px;border-radius:7px;">stock à date</div>
+          </div>
+          <div class="mono" style="font-size:40px;font-weight:600;color:#fff;letter-spacing:-.02em;margin-top:8px;line-height:1;">248 520 €</div>
+          <div style="display:inline-flex;align-items:center;gap:6px;margin-top:12px;background:rgba(61,220,132,.14);border:1px solid rgba(61,220,132,.25);padding:5px 10px;border-radius:9px;">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#3ddc84" stroke-width="3"><path d="M7 17 17 7M17 7H9M17 7v8"/></svg>
+            <span class="mono" style="font-size:12px;color:#3ddc84;font-weight:600;">+11 720 €</span>
+            <span style="font-size:12px;color:#7c9286;">· 12 mois</span>
+          </div>
+          <!-- sparkline (area) -->
+          <svg viewBox="0 0 320 70" width="100%" height="58" preserveAspectRatio="none" style="margin-top:16px;display:block;">
+            <defs><linearGradient id="mspark" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3ddc84" stop-opacity="0.34"/><stop offset="1" stop-color="#3ddc84" stop-opacity="0"/></linearGradient></defs>
+            <path d="{{ sparkArea }}" fill="url(#mspark)"></path>
+            <path d="{{ sparkLine }}" fill="none" stroke="#3ddc84" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+        </section>
+
+        <!-- KPI row -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-top:11px;">
+          <div style="background:#fff;border:1px solid #eef3f0;border-radius:18px;padding:15px;">
+            <div style="font-size:11px;color:#93a29a;font-weight:600;">Résultat · semestre</div>
+            <div class="mono" style="font-size:22px;font-weight:600;color:#16915a;margin-top:6px;">+9 240 €</div>
+            <div style="font-size:11px;color:#8a978f;margin-top:3px;">Produits − charges</div>
+          </div>
+          <div style="background:#fff;border:1px solid #eef3f0;border-radius:18px;padding:15px;">
+            <div style="font-size:11px;color:#93a29a;font-weight:600;">Trésorerie · 30 j</div>
+            <div class="mono" style="font-size:22px;font-weight:600;color:#0e1f16;margin-top:6px;">4 120 €</div>
+            <div style="font-size:11px;color:#c08a3e;margin-top:3px;">Plancher 2 180 €</div>
+          </div>
+        </div>
+
+        <!-- raccourcis -->
+        <div style="display:flex;gap:9px;margin-top:14px;overflow-x:auto;" class="scl">
+          <sc-for list="{{ shortcuts }}" as="s" hint-placeholder-count="4">
+            <button onClick="{{ s.onClick }}" style="flex-shrink:0;border:none;background:none;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:7px;width:64px;padding:0;">
+              <div style="width:52px;height:52px;border-radius:16px;background:#fff;border:1px solid #eef3f0;display:flex;align-items:center;justify-content:center;color:#16915a;">
+                <div style="width:20px;height:20px;display:flex;">{{ s.iconEl }}</div>
+              </div>
+              <span style="font-size:10.5px;color:#4a5a50;font-weight:600;text-align:center;line-height:1.2;">{{ s.label }}</span>
+            </button>
+          </sc-for>
+        </div>
+
+        <!-- dernières opérations -->
+        <div style="display:flex;align-items:center;justify-content:space-between;margin:20px 2px 10px;">
+          <div style="font-size:14px;font-weight:800;color:#0e1f16;letter-spacing:-.01em;">Dernières opérations</div>
+          <button onClick="{{ goFlux }}" style="border:none;background:none;cursor:pointer;font-size:12px;color:#16915a;font-weight:600;padding:0;">Tout voir</button>
+        </div>
+        <section style="background:#fff;border:1px solid #eef3f0;border-radius:18px;overflow:hidden;">
+          <sc-for list="{{ recentTxns }}" as="t" hint-placeholder-count="4">
+            <button onClick="{{ t.onClick }}" style="width:100%;border:none;background:none;cursor:pointer;text-align:left;display:flex;align-items:center;gap:12px;padding:13px 15px;border-bottom:1px solid #f1f5f2;">
+              <div style="width:38px;height:38px;border-radius:11px;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:{{ t.iconBg }};color:{{ t.iconCol }};"><div style="width:18px;height:18px;display:flex;">{{ t.iconEl }}</div></div>
+              <div style="flex:1;min-width:0;">
+                <div style="font-size:13.5px;font-weight:700;color:#1d2c23;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ t.label }}</div>
+                <div style="font-size:11px;color:#93a29a;">{{ t.meta }}</div>
+              </div>
+              <div class="mono" style="font-size:14px;font-weight:600;color:{{ t.amtColor }};">{{ t.amount }}</div>
+            </button>
+          </sc-for>
+        </section>
+      </sc-if>
+
+      <!-- ========== TAB : FLUX ========== -->
+      <sc-if value="{{ isFlux }}" hint-placeholder-val="{{ false }}">
+        <div style="font-size:22px;font-weight:800;color:#0e1f16;letter-spacing:-.025em;margin:2px 2px 4px;">Flux</div>
+        <div style="font-size:12.5px;color:#7c8a81;margin:0 2px 14px;">Opérations bancaires synchronisées · DSP2</div>
+        <div style="display:flex;align-items:center;gap:9px;background:#fff;border:1px solid #e9efeb;border-radius:13px;padding:10px 13px;margin-bottom:16px;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#93a29a" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+          <input value="{{ search }}" onInput="{{ onSearch }}" placeholder="Rechercher une opération…" style="flex:1;border:none;outline:none;background:none;font-family:inherit;font-size:13px;color:#1d2c23;" />
+          <sc-if value="{{ hasSearch }}" hint-placeholder-val="{{ false }}"><button onClick="{{ clearSearch }}" style="border:none;background:#f1f5f2;cursor:pointer;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;padding:0;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#7c8a81" stroke-width="2.4"><path d="M5 5l14 14M19 5L5 19"/></svg></button></sc-if>
+        </div>
+        <sc-if value="{{ fluxEmpty }}" hint-placeholder-val="{{ false }}">
+          <div style="text-align:center;padding:40px 20px;color:#9aa79f;font-size:13px;">Aucune opération pour « {{ search }} ».</div>
+        </sc-if>
+        <sc-for list="{{ fluxGroups }}" as="g" hint-placeholder-count="2">
+          <div style="font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#93a29a;font-weight:700;margin:6px 2px 8px;">{{ g.day }}</div>
+          <section style="background:#fff;border:1px solid #eef3f0;border-radius:18px;overflow:hidden;margin-bottom:14px;">
+            <sc-for list="{{ g.items }}" as="t" hint-placeholder-count="3">
+              <button onClick="{{ t.onClick }}" style="width:100%;border:none;background:none;cursor:pointer;text-align:left;display:flex;align-items:center;gap:12px;padding:13px 15px;border-bottom:1px solid #f1f5f2;">
+                <div style="width:38px;height:38px;border-radius:11px;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:{{ t.iconBg }};color:{{ t.iconCol }};"><div style="width:18px;height:18px;display:flex;">{{ t.iconEl }}</div></div>
+                <div style="flex:1;min-width:0;">
+                  <div style="font-size:13.5px;font-weight:700;color:#1d2c23;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ t.label }}</div>
+                  <div style="font-size:11px;color:#93a29a;">{{ t.meta }}</div>
+                </div>
+                <div class="mono" style="font-size:14px;font-weight:600;color:{{ t.amtColor }};">{{ t.amount }}</div>
+              </button>
+            </sc-for>
+          </section>
+        </sc-for>
+      </sc-if>
+
+      <!-- ========== TAB : PATRIMOINE ========== -->
+      <sc-if value="{{ isPatri }}" hint-placeholder-val="{{ false }}">
+        <div style="font-size:22px;font-weight:800;color:#0e1f16;letter-spacing:-.025em;margin:2px 2px 4px;">Patrimoine</div>
+        <div style="font-size:12.5px;color:#7c8a81;margin:0 2px 16px;">Valeur nette · {{ todayLabel }}</div>
+        <section style="background:#07150f;border-radius:20px;padding:20px;margin-bottom:14px;">
+          <div style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#7c9286;font-weight:700;">Composition de l'actif</div>
+          <div class="mono" style="font-size:30px;font-weight:600;color:#fff;margin-top:6px;">312 800 €</div>
+          <div style="font-size:11px;color:#7c9286;margin-top:2px;">Actifs bruts · emprunts −64 280 €</div>
+          <div style="margin-top:16px;display:flex;flex-direction:column;gap:11px;">
+            <sc-for list="{{ composition }}" as="c" hint-placeholder-count="4">
+              <div>
+                <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:5px;">
+                  <span style="color:#cfe0d6;font-weight:600;">{{ c.label }}</span>
+                  <span class="mono" style="color:#8aa294;">{{ c.pct }} · {{ c.val }}</span>
+                </div>
+                <div style="height:7px;border-radius:4px;background:rgba(255,255,255,.08);overflow:hidden;">
+                  <div style="height:100%;border-radius:4px;background:{{ c.color }};width:{{ c.pct }};"></div>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </section>
+        <div style="font-size:13px;font-weight:800;color:#0e1f16;margin:4px 2px 10px;">Actifs suivis</div>
+        <section style="background:#fff;border:1px solid #eef3f0;border-radius:18px;overflow:hidden;">
+          <sc-for list="{{ assets }}" as="a" hint-placeholder-count="4">
+            <button onClick="{{ a.onClick }}" style="width:100%;border:none;background:none;cursor:pointer;text-align:left;display:flex;align-items:center;gap:12px;padding:13px 15px;border-bottom:1px solid #f1f5f2;">
+              <div style="width:38px;height:38px;border-radius:11px;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:#eef6f1;color:#16915a;"><div style="width:18px;height:18px;display:flex;">{{ a.iconEl }}</div></div>
+              <div style="flex:1;min-width:0;">
+                <div style="font-size:13.5px;font-weight:700;color:#1d2c23;">{{ a.label }}</div>
+                <div style="font-size:11px;color:#93a29a;">{{ a.meta }}</div>
+              </div>
+              <div style="text-align:right;">
+                <div class="mono" style="font-size:14px;font-weight:600;color:#0e1f16;">{{ a.val }}</div>
+                <div class="mono" style="font-size:11px;color:{{ a.trendColor }};">{{ a.trend }}</div>
+              </div>
+            </button>
+          </sc-for>
+        </section>
+      </sc-if>
+
+      <!-- ========== TAB : COPILOTE ========== -->
+      <sc-if value="{{ isCopi }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;align-items:center;gap:10px;margin:2px 2px 4px;">
+          <div style="width:34px;height:34px;border-radius:11px;background:#07150f;display:flex;align-items:center;justify-content:center;">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#3ddc84" stroke-width="2"><path d="M12 3 13.9 8.6 19.5 8.6 15 12.2 16.5 17.8 12 14.4 7.5 17.8 9 12.2 4.5 8.6 10.1 8.6Z"/></svg>
+          </div>
+          <div style="font-size:22px;font-weight:800;color:#0e1f16;letter-spacing:-.025em;">Copilote</div>
+        </div>
+        <div style="font-size:12.5px;color:#7c8a81;margin:0 2px 16px;">Posez vos questions financières — réponses ancrées sur vos données.</div>
+        <div style="display:flex;flex-direction:column;gap:11px;margin-bottom:16px;">
+          <sc-for list="{{ copiMsgs }}" as="m" hint-placeholder-count="3">
+            <div style="display:flex;justify-content:{{ m.justify }};">
+              <div style="max-width:86%;font-size:13px;line-height:1.5;padding:12px 14px;border-radius:16px;background:{{ m.bg }};color:{{ m.col }};border:{{ m.brd }};">{{ m.text }}</div>
+            </div>
+          </sc-for>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px;">
+          <sc-for list="{{ copiChips }}" as="c" hint-placeholder-count="3">
+            <button onClick="{{ c.onClick }}" style="border:none;cursor:pointer;font-family:inherit;font-size:12px;color:#16915a;background:#eaf6ee;border:1px solid #d4ead9;padding:7px 12px;border-radius:10px;font-weight:600;">{{ c.label }}</button>
+          </sc-for>
+        </div>
+        <div style="display:flex;align-items:center;gap:9px;background:#fff;border:1px solid #e9efeb;border-radius:14px;padding:9px 9px 9px 15px;">
+          <input value="{{ copiInput }}" onInput="{{ onCopiInput }}" onKeyDown="{{ onCopiKey }}" placeholder="Posez une question…" style="flex:1;border:none;outline:none;background:none;font-family:inherit;font-size:13px;color:#1d2c23;" />
+          <button onClick="{{ sendCopi }}" style="border:none;cursor:pointer;width:34px;height:34px;border-radius:10px;background:#07150f;display:flex;align-items:center;justify-content:center;padding:0;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3ddc84" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </button>
+        </div>
+      </sc-if>
+
+    </div>
+
+    <!-- ===================== BOTTOM NAV ===================== -->
+    <div style="flex-shrink:0;background:#fff;border-top:1px solid #eef3f0;padding:9px 14px 26px;display:grid;grid-template-columns:repeat(4,1fr);gap:4px;">
+      <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="4">
+        <button onClick="{{ t.onClick }}" style="border:none;background:none;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:5px;padding:6px 0;">
+          <div style="width:22px;height:22px;color:{{ t.color }};display:flex;">{{ t.iconEl }}</div>
+          <span style="font-size:10px;font-weight:700;color:{{ t.color }};letter-spacing:.01em;">{{ t.label }}</span>
+        </button>
+      </sc-for>
+    </div>
+
+    <!-- ===================== BOTTOM SHEET (drill-down) ===================== -->
+    <sc-if value="{{ sheetOpen }}" hint-placeholder-val="{{ false }}">
+      <div onClick="{{ closeSheet }}" style="position:absolute;inset:0;background:rgba(7,21,15,.5);backdrop-filter:blur(2px);animation:scrimIn .2s ease;z-index:20;"></div>
+      <div style="position:absolute;left:0;right:0;bottom:0;background:#fff;border-radius:26px 26px 0 0;padding:10px 20px 30px;z-index:21;animation:sheetUp .28s cubic-bezier(.22,1,.36,1);max-height:82%;overflow-y:auto;" class="scl">
+        <div style="width:40px;height:5px;border-radius:3px;background:#dfe7e2;margin:6px auto 16px;"></div>
+        <div style="display:flex;align-items:center;gap:13px;">
+          <div style="width:46px;height:46px;border-radius:13px;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:{{ sheet.iconBg }};color:{{ sheet.iconCol }};"><div style="width:22px;height:22px;display:flex;">{{ sheet.iconEl }}</div></div>
+          <div style="flex:1;min-width:0;">
+            <div style="font-size:16px;font-weight:800;color:#0e1f16;letter-spacing:-.01em;">{{ sheet.label }}</div>
+            <div style="font-size:12px;color:#93a29a;">{{ sheet.sub }}</div>
+          </div>
+          <div class="mono" style="font-size:20px;font-weight:600;color:{{ sheet.amtColor }};">{{ sheet.amount }}</div>
+        </div>
+
+        <!-- provenance -->
+        <div style="font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#a9b5ad;font-weight:700;margin:22px 0 10px;">Provenance &amp; source</div>
+        <div style="background:#f7faf8;border:1px solid #eef3f0;border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:11px;">
+          <sc-for list="{{ sheet.provenance }}" as="p" hint-placeholder-count="3">
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;">
+              <span style="font-size:12.5px;color:#7c8a81;">{{ p.k }}</span>
+              <span style="font-size:12.5px;font-weight:700;color:#1d2c23;text-align:right;">{{ p.v }}</span>
+            </div>
+          </sc-for>
+        </div>
+
+        <!-- composition -->
+        <div style="font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#a9b5ad;font-weight:700;margin:20px 0 10px;">Composition</div>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <sc-for list="{{ sheet.composition }}" as="c" hint-placeholder-count="2">
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px 14px;background:#fff;border:1px solid #eef3f0;border-radius:12px;">
+              <span style="font-size:12.5px;color:#1d2c23;font-weight:600;">{{ c.k }}</span>
+              <span class="mono" style="font-size:12.5px;color:#59685f;">{{ c.v }}</span>
+            </div>
+          </sc-for>
+        </div>
+
+        <div style="display:flex;gap:10px;margin-top:22px;">
+          <button onClick="{{ closeSheet }}" style="flex:1;border:1px solid #e3ebe6;background:#fff;cursor:pointer;font-family:inherit;font-size:13.5px;font-weight:700;color:#0e1f16;padding:13px;border-radius:13px;">Fermer</button>
+          <button onClick="{{ closeSheet }}" style="flex:1;border:none;cursor:pointer;font-family:inherit;font-size:13.5px;font-weight:700;color:#07150f;background:#3ddc84;padding:13px;border-radius:13px;">{{ sheet.cta }}</button>
+        </div>
+      </div>
+    </sc-if>
+
+  </div>
+
+</x-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:482,&quot;height&quot;:954}}">
+class Component extends DCLogic {
+  state = { tab: 'home', search: '', sheet: null, copiInput: '', copiMsgs: null };
+
+  mkIcon = (paths, sw) => {
+    const h = React.createElement;
+    return h('svg', { width: '100%', height: '100%', viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: sw || 2, strokeLinecap: 'round', strokeLinejoin: 'round' },
+      paths.map((d, i) => h('path', { key: i, d })));
+  };
+  ico = {
+    home: ['M3 10.5 12 3l9 7.5', 'M5 9.5V21h14V9.5'],
+    flux: ['M7 4v13', 'M7 17l-3-3', 'M7 17l3-3', 'M17 20V7', 'M17 7l3 3', 'M17 7l-3 3'],
+    patri: ['M3 21h18', 'M5 21V9l7-5 7 5v12', 'M9 21v-6h6v6'],
+    copi: ['M12 3 13.6 8.4 19 9 14.5 12.4 16 18 12 14.8 8 18 9.5 12.4 5 9 10.4 8.4Z'],
+  };
+  scIcons = {
+    add: ['M12 5v14', 'M5 12h14'],
+    scan: ['M4 8V5a1 1 0 0 1 1-1h3', 'M16 4h3a1 1 0 0 1 1 1v3', 'M20 16v3a1 1 0 0 1-1 1h-3', 'M8 20H5a1 1 0 0 1-1-1v-3', 'M4 12h16'],
+    fisc: ['M14 3v4h4', 'M14 3H6v18h12V7Z', 'M9 13h6', 'M9 17h4'],
+    proj: ['M3 18 9 12l4 4 8-8', 'M21 8v5', 'M21 8h-5'],
+  };
+  // category glyphs (replace emoji)
+  cat = {
+    cart: ['M6 6h15l-1.6 9H8.4z', 'M6 6 5 3H2', 'M9.5 20a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z', 'M18 20a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z'],
+    bolt: ['M13 2 4 14h7l-1 8 9-12h-7z'],
+    home: ['M3 10.5 12 3l9 7.5', 'M5 9.5V21h14V9.5'],
+    salary: ['M3 7h18v11H3z', 'M3 7l2-3h14l2 3', 'M16 12.5h.01', 'M12 9.5a3 3 0 1 0 0 6 3 3 0 0 0 0-6Z'],
+    cup: ['M4 8h13v4a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5z', 'M17 9h2a2 2 0 0 1 0 4h-2', 'M7 3v2M11 3v2'],
+    phone: ['M7 2h10v20H7z', 'M11 18.5h2'],
+    chart: ['M3 18 9 12l4 4 8-8', 'M21 8v5', 'M21 8h-5'],
+    shield: ['M12 3 5 6v5c0 4 3 7 7 8 4-1 7-4 7-8V6Z', 'M9.5 12l1.8 1.8L15 10'],
+    building: ['M4 21V6l8-3 8 3v15', 'M9 21v-5h6v5', 'M8 9h.01M12 9h.01M16 9h.01'],
+  };
+
+  renderVals() {
+    const tab = this.state.tab;
+    const setTab = (k) => this.setState({ tab: k });
+    const navColor = (k) => tab === k ? '#0e1f16' : '#b3c0b8';
+
+    const tabs = [
+      { key: 'home', label: 'Accueil', iconEl: this.mkIcon(this.ico.home) },
+      { key: 'flux', label: 'Flux', iconEl: this.mkIcon(this.ico.flux) },
+      { key: 'patri', label: 'Patrimoine', iconEl: this.mkIcon(this.ico.patri) },
+      { key: 'copi', label: 'Copilote', iconEl: this.mkIcon(this.ico.copi) },
+    ].map(t => ({ ...t, color: navColor(t.key), onClick: () => setTab(t.key) }));
+
+    // sparkline path from 12 monthly points
+    const sv = [231,233,232,236,235,239,238,242,241,245,247,248.5];
+    const mn = Math.min(...sv), mx = Math.max(...sv), W = 320, H = 70, pad = 6;
+    const pts = sv.map((v, i) => {
+      const x = (i / (sv.length - 1)) * W;
+      const y = pad + (1 - (v - mn) / (mx - mn)) * (H - pad * 2);
+      return [x, y];
+    });
+    const sparkLine = pts.map((p, i) => (i ? 'L' : 'M') + p[0].toFixed(1) + ' ' + p[1].toFixed(1)).join(' ');
+    const sparkArea = sparkLine + ` L${W} ${H} L0 ${H} Z`;
+
+    const openShortcut = (label) => () => this.setState({ sheet: {
+      label, sub: 'Action rapide', amount: '', amtColor: '#0e1f16',
+      iconBg: '#eef6f1', iconCol: '#16915a', iconEl: this.mkIcon(this.cat.chart),
+      provenance: [{ k: 'Type', v: label }, { k: 'Disponibilité', v: 'Démo' }],
+      composition: [{ k: 'Écran complet', v: 'Sur desktop' }],
+      cta: 'Ouvrir',
+    }});
+    const shortcuts = [
+      { label: 'Ajouter', iconEl: this.mkIcon(this.scIcons.add, 2.2), onClick: openShortcut('Ajouter une opération') },
+      { label: 'Scanner', iconEl: this.mkIcon(this.scIcons.scan), onClick: openShortcut('Scanner un justificatif') },
+      { label: 'Fiscalité', iconEl: this.mkIcon(this.scIcons.fisc), onClick: openShortcut('Candidats fiscaux') },
+      { label: 'Projeter', iconEl: this.mkIcon(this.scIcons.proj), onClick: openShortcut('Projection patrimoine') },
+    ];
+
+    // transaction factory with category icon + drill-down sheet
+    const palette = {
+      income: { bg: '#eaf6ee', col: '#16915a' },
+      shop:   { bg: '#f4f1ea', col: '#b07d2e' },
+      energy: { bg: '#f0eef6', col: '#6b5ea8' },
+      telecom:{ bg: '#eef3f8', col: '#3a73c4' },
+    };
+    const tx = (catKey, group, label, meta, amount, pos, prov, comp) => {
+      const p = palette[group];
+      const item = {
+        label, meta, amount, pos,
+        amtColor: pos ? '#16915a' : '#1d2c23',
+        iconBg: p.bg, iconCol: p.col, iconEl: this.mkIcon(this.cat[catKey]),
+        sheet: {
+          label, sub: meta, amount, amtColor: pos ? '#16915a' : '#1d2c23',
+          iconBg: p.bg, iconCol: p.col, iconEl: this.mkIcon(this.cat[catKey]),
+          provenance: prov, composition: comp, cta: 'Recatégoriser',
+        },
+      };
+      item.onClick = () => this.setState({ sheet: item.sheet });
+      return item;
+    };
+
+    const recentTxns = [
+      tx('building','income','Loyer perçu — T2 Lyon','Virement · 706','+1 200 €',true,
+        [{k:'Source',v:'Crédit Agricole'},{k:'Connexion',v:'DSP2 · Powens'},{k:'Synchro',v:'il y a 2 h'},{k:'Statut',v:'Rapprochée'}],
+        [{k:'Compte 512 (banque)',v:'+1 200,00 €'},{k:'Compte 706 (loyers)',v:'−1 200,00 €'}]),
+      tx('cart','shop','Carrefour Market','Carte · 607','−84,30 €',false,
+        [{k:'Source',v:'BNP Paribas'},{k:'Connexion',v:'DSP2 · Bridge'},{k:'Marchand',v:'Carrefour (normalisé)'},{k:'Règle',v:'Auto · 99%'}],
+        [{k:'Compte 607 (achats)',v:'+84,30 €'},{k:'Compte 512 (banque)',v:'−84,30 €'}]),
+      tx('bolt','energy','EDF Électricité','Prélèvement · 606','−68,90 €',false,
+        [{k:'Source',v:'BNP Paribas'},{k:'Connexion',v:'DSP2 · Bridge'},{k:'Récurrence',v:'Mensuelle'},{k:'Statut',v:'Classée'}],
+        [{k:'Compte 606 (énergie)',v:'+68,90 €'},{k:'Compte 512 (banque)',v:'−68,90 €'}]),
+      tx('salary','income','Salaire net','Virement · 641','+3 480 €',true,
+        [{k:'Source',v:'Crédit Agricole'},{k:'Connexion',v:'DSP2 · Powens'},{k:'Récurrence',v:'Mensuelle'},{k:'Statut',v:'Rapprochée'}],
+        [{k:'Compte 512 (banque)',v:'+3 480,00 €'},{k:'Compte 641 (revenus)',v:'−3 480,00 €'}]),
+    ];
+
+    const allGroups = [
+      { day: "Aujourd'hui · 30 juin", items: [
+        tx('cart','shop','Carrefour Market','13:42 · Vie courante','−84,30 €',false,
+          [{k:'Source',v:'BNP Paribas'},{k:'Marchand',v:'Carrefour (normalisé)'},{k:'Règle',v:'Auto · 99%'}],
+          [{k:'Compte 607',v:'+84,30 €'},{k:'Compte 512',v:'−84,30 €'}]),
+        tx('cup','shop','Café Nelson','09:18 · Vie courante','−4,80 €',false,
+          [{k:'Source',v:'BNP Paribas'},{k:'Marchand',v:'Café Nelson'},{k:'Règle',v:'IA · 88%'}],
+          [{k:'Compte 607',v:'+4,80 €'},{k:'Compte 512',v:'−4,80 €'}]),
+      ]},
+      { day: 'Hier · 29 juin', items: [
+        tx('building','income','Loyer perçu — T2 Lyon','Virement · Revenus','+1 200 €',true,
+          [{k:'Source',v:'Crédit Agricole'},{k:'Connexion',v:'DSP2 · Powens'},{k:'Statut',v:'Rapprochée'}],
+          [{k:'Compte 512',v:'+1 200,00 €'},{k:'Compte 706',v:'−1 200,00 €'}]),
+        tx('bolt','energy','EDF Électricité','Prélèvement · Énergie','−68,90 €',false,
+          [{k:'Source',v:'BNP Paribas'},{k:'Récurrence',v:'Mensuelle'}],
+          [{k:'Compte 606',v:'+68,90 €'},{k:'Compte 512',v:'−68,90 €'}]),
+        tx('phone','telecom','Forfait mobile','Abonnement','−19,99 €',false,
+          [{k:'Source',v:'BNP Paribas'},{k:'Type',v:'Abonnement rapproché'},{k:'Échéance',v:'le 29'}],
+          [{k:'Compte 626',v:'+19,99 €'},{k:'Compte 512',v:'−19,99 €'}]),
+      ]},
+    ];
+    const q = this.state.search.trim().toLowerCase();
+    const fluxGroups = q
+      ? allGroups.map(g => ({ ...g, items: g.items.filter(it => it.label.toLowerCase().includes(q) || it.meta.toLowerCase().includes(q)) })).filter(g => g.items.length)
+      : allGroups;
+
+    const composition = [
+      { label: 'Immobilier', pct: '61%', val: '190 800 €', color: '#3ddc84' },
+      { label: 'Titres', pct: '18%', val: '56 300 €', color: '#5ec8e0' },
+      { label: 'Épargne', pct: '14%', val: '43 800 €', color: '#c2e06a' },
+      { label: 'Liquidités', pct: '7%', val: '21 900 €', color: '#e0b95e' },
+    ];
+
+    const asset = (catKey, label, meta, val, trend, prov, comp) => {
+      const item = { label, meta, val, trend, trendColor: '#16915a', iconEl: this.mkIcon(this.cat[catKey]) };
+      item.onClick = () => this.setState({ sheet: {
+        label, sub: meta, amount: val, amtColor: '#0e1f16',
+        iconBg: '#eef6f1', iconCol: '#16915a', iconEl: this.mkIcon(this.cat[catKey]),
+        provenance: prov, composition: comp, cta: 'Voir l\u2019historique',
+      }});
+      return item;
+    };
+    const assets = [
+      asset('home','Résidence principale','Achat 2019 · amorti','128 000 €','+3,1%',
+        [{k:'Évaluation',v:'Indice notarial'},{k:'Mise à jour',v:'Trimestrielle'},{k:'Emprunt adossé',v:'−42 100 €'}],
+        [{k:'Valeur brute',v:'170 100 €'},{k:'Capital restant dû',v:'−42 100 €'}]),
+      asset('building','T2 locatif — Lyon','Rendement 4,2%','62 800 €','+1,8%',
+        [{k:'Évaluation',v:'Indice notarial'},{k:'Loyer mensuel',v:'+1 200 €'},{k:'Emprunt adossé',v:'−22 180 €'}],
+        [{k:'Valeur brute',v:'84 980 €'},{k:'Capital restant dû',v:'−22 180 €'}]),
+      asset('chart','PEA — actions','12 lignes','34 600 €','+11,2%',
+        [{k:'Source',v:'Bourse · cours J-1'},{k:'Connexion',v:'Agrégateur titres'},{k:'Lignes',v:'12'}],
+        [{k:'Plus-value latente',v:'+3 480 €'},{k:'Versements',v:'31 120 €'}]),
+      asset('shield','Assurance-vie','Fonds € + UC','21 700 €','+2,4%',
+        [{k:'Assureur',v:'Spirica'},{k:'Support',v:'Fonds € 60% · UC 40%'},{k:'Mise à jour',v:'Mensuelle'}],
+        [{k:'Fonds €',v:'13 020 €'},{k:'Unités de compte',v:'8 680 €'}]),
+    ];
+
+    // ---- Copilote (functional) ----
+    const baseMsgs = [
+      { who:'a', justify:'flex-start', bg:'#fff', col:'#243029', brd:'1px solid #eef3f0', text:'Bonjour Camille 👋 Votre trésorerie reste au-dessus de 2 180 € ce mois. Que souhaitez-vous analyser ?' },
+      { who:'u', justify:'flex-end', bg:'#07150f', col:'#e9f0ea', brd:'none', text:'Combien j\u2019épargne réellement ce trimestre ?' },
+      { who:'a', justify:'flex-start', bg:'#fff', col:'#243029', brd:'1px solid #eef3f0', text:'Taux d\u2019épargne réel ≈ 14 % : 1 100 € liquides + 3 600 € de capital remboursé sur vos emprunts.' },
+    ];
+    const msgs = this.state.copiMsgs || baseMsgs;
+    const userBubble = (t) => ({ who:'u', justify:'flex-end', bg:'#07150f', col:'#e9f0ea', brd:'none', text: t });
+    const botBubble = (t) => ({ who:'a', justify:'flex-start', bg:'#fff', col:'#243029', brd:'1px solid #eef3f0', text: t });
+    const answer = (qt) => {
+      const s = qt.toLowerCase();
+      if (s.includes('abonnement')) return 'Vous avez 6 abonnements actifs (≈ 84 €/mois). Adobe et un forfait mobile font doublon avec des offres incluses — économie potentielle ≈ 22 €/mois.';
+      if (s.includes('déclar') || s.includes('impôt') || s.includes('fisc')) return 'J\u2019ai identifié 1 900 € de dons et 4 200 € de charges déductibles (foncier). Gain estimé ≈ 1 260 €. Les pièces sont dans votre coffre-fort.';
+      if (s.includes('immo') || s.includes('achat')) return 'Avec 21 900 € de liquidités et une capacité de 1 040 €/mois, un achat à 240 000 € reste finançable sans descendre sous votre plancher de trésorerie.';
+      return 'D\u2019après vos données : patrimoine net 248 520 € (+11 720 €/12 mois), résultat semestriel +9 240 €. Souhaitez-vous le détail d\u2019un poste ?';
+    };
+    const pushMsg = (text) => {
+      const t = (text || '').trim();
+      if (!t) return;
+      const next = [...msgs, userBubble(t), botBubble(answer(t))];
+      this.setState({ copiMsgs: next, copiInput: '' });
+    };
+    const copiChips = ['Optimiser mes abonnements', 'Préparer ma déclaration', 'Simuler un achat immo']
+      .map(label => ({ label, onClick: () => pushMsg(label) }));
+
+    const hour = new Date().getHours();
+    const greeting = hour < 12 ? 'Bonjour' : (hour < 18 ? 'Bon après-midi' : 'Bonsoir');
+    const todayLabel = new Date().toLocaleDateString('fr-FR', { day:'numeric', month:'long', year:'numeric' });
+
+    const sheet = this.state.sheet;
+
+    return {
+      isHome: tab === 'home', isFlux: tab === 'flux', isPatri: tab === 'patri', isCopi: tab === 'copi',
+      tabs, sparkLine, sparkArea, shortcuts, recentTxns, fluxGroups, composition, assets,
+      copiMsgs: msgs, copiChips, greeting, todayLabel,
+      goFlux: () => setTab('flux'),
+      search: this.state.search, hasSearch: q.length > 0,
+      fluxEmpty: q.length > 0 && fluxGroups.length === 0,
+      onSearch: (e) => this.setState({ search: e.target.value }),
+      clearSearch: () => this.setState({ search: '' }),
+      copiInput: this.state.copiInput,
+      onCopiInput: (e) => this.setState({ copiInput: e.target.value }),
+      onCopiKey: (e) => { if (e.key === 'Enter') pushMsg(this.state.copiInput); },
+      sendCopi: () => pushMsg(this.state.copiInput),
+      sheetOpen: !!sheet, sheet: sheet || {},
+      closeSheet: () => this.setState({ sheet: null }),
+    };
+  }
+}
+</script>
+</body>
+</html>
