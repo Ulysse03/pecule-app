@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import Layout from '../components/Layout';
-import { eur, projectedValue, scenarioDefs, upcoming, subs } from '../data/mock';
+import { eur, projectedValue, scenarioDefs, stressTests, upcoming, subs } from '../data/mock';
 
 export default function Projections() {
   const [years, setYears] = useState(10);
@@ -29,9 +29,11 @@ export default function Projections() {
             {(Object.keys(scenarioDefs) as Array<keyof typeof scenarioDefs>).map(k => {
               const s = scenarioDefs[k];
               const active = scenario === k;
+              const val = projectedValue(s.rate, s.monthly, years);
               return (
-                <button key={k} onClick={() => setScenario(k)} style={{ flex: 1, padding: '7px 10px', borderRadius: 9, border: active ? '2px solid #07150f' : '2px solid rgba(10,31,10,.2)', background: active ? '#07150f' : 'rgba(255,255,255,.4)', color: active ? '#c9f24e' : '#1f2a0a', fontSize: 12, fontWeight: 600, cursor: 'pointer', fontFamily: 'inherit', transition: 'all .15s' }}>
-                  {s.label}
+                <button key={k} onClick={() => setScenario(k)} style={{ flex: 1, padding: '8px 10px', borderRadius: 9, border: active ? '2px solid #07150f' : '2px solid rgba(10,31,10,.2)', background: active ? '#07150f' : 'rgba(255,255,255,.4)', color: active ? '#c9f24e' : '#1f2a0a', fontSize: 12, fontWeight: 600, cursor: 'pointer', fontFamily: 'inherit', transition: 'all .15s', textAlign: 'left' }}>
+                  <div>{s.label}</div>
+                  <div style={{ fontSize: 10.5, fontFamily: "'JetBrains Mono',monospace", marginTop: 2, opacity: 0.8 }}>{eur(val)}</div>
                 </button>
               );
             })}
@@ -88,6 +90,21 @@ export default function Projections() {
               <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 13.5, fontWeight: 600 }}>{s.price}</div>
             </div>
           ))}
+        </section>
+
+        {/* analyse de sensibilité */}
+        <section style={{ gridColumn: 'span 4', background: '#fff', borderRadius: 20, padding: 22 }}>
+          <div style={{ fontSize: 14, fontWeight: 700, marginBottom: 4 }}>Analyse de sensibilité</div>
+          <div style={{ fontSize: 12, color: '#93a29a', marginBottom: 16 }}>Impact estimé sur le patrimoine vs scénario central à {years} ans.</div>
+          <div style={{ display: 'flex', gap: 12 }}>
+            {stressTests.map(t => (
+              <div key={t.label} style={{ flex: 1, background: t.tone === '#0a7a52' ? '#eef8f2' : '#fdeeec', borderRadius: 14, padding: '14px 16px', borderTop: `3px solid ${t.tone}` }}>
+                <div style={{ fontSize: 13, fontWeight: 600, color: '#0f1a14', marginBottom: 4 }}>{t.label}</div>
+                <div style={{ fontSize: 11, color: '#93a29a', marginBottom: 10 }}>{t.note}</div>
+                <div style={{ fontSize: 22, fontWeight: 700, fontFamily: "'JetBrains Mono',monospace", color: t.tone }}>{t.delta}</div>
+              </div>
+            ))}
+          </div>
         </section>
 
         {/* trésorerie prévisionnelle */}

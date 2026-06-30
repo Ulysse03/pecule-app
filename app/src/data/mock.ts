@@ -222,6 +222,12 @@ export function projectedValue(rate: number, monthly: number, years: number) {
   return NET0 * Math.pow(1 + rate, years) + monthly * 12 * ((Math.pow(1 + rate, years) - 1) / rate);
 }
 
+export const stressTests = [
+  { label: 'Perte d\'emploi 6 mois', delta: '−' + eur(scenarioDefs.central.monthly * 6), tone: '#b23b30', note: 'Arrêt des versements mensuels' },
+  { label: 'Krach −20 % actifs risqués', delta: '−' + eur(NET0 * 0.19 * 0.2), tone: '#b23b30', note: '19 % d\'exposition marché' },
+  { label: 'Taux livrets +1 pt', delta: '+' + eur(NET0 * 0.10 * 0.01), tone: '#0a7a52', note: '10 % en livrets réglementés' },
+];
+
 export const upcoming = [
   { label: 'Facture client #A-204', due: 'Échéance 12 juil', amount: '+2 400 €', dot: '#0e9f6e' },
   { label: 'Remboursement assurance', due: 'Échéance 18 juil', amount: '+320 €', dot: '#0e9f6e' },
